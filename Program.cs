@@ -21,6 +21,7 @@ class Program
         ReadSingleUser();
         NewEntries();
         DeserialiseAllUsers();
+        Inheritance();
 
     }
 
@@ -102,6 +103,45 @@ class Program
         }
     }
 
+    // Inheritance + deserialise user_types.json
+
+    static void Inheritance()
+    {
+        PrintSectionHeader("Inheritance (Admin / RegularUser) + user_types.json");
+
+        string path = DataPath("user_types.json");
+        string json = File.ReadAllText(path);
+
+        // Parse as a generic JArray first so we can inspect the "UserType" discriminator before choosing which concrete class to deserialise into.
+        JArray rawArray = JArray.Parse(json);
+
+        // Collect results as the base type so we can call the virtual method
+        List<User> typedUsers = new();
+
+        foreach (JObject item in rawArray)
+        {
+            string userType = item["UserType"]?.ToString() ?? string.Empty;
+
+            User user = userType switch
+            {
+                "Admin" => item.ToObject<Admin>()!,
+                "RegularUser" => item.ToObject<RegularUser>()!,
+                _ => item.ToObject<User>()!        // fallback
+            };
+
+            typedUsers.Add(user);
+        }
+
+        Console.WriteLine($"Total typed users loaded: {typedUsers.Count}\n");
+
+        // Polymorphic loop – each subclass overrides DisplayInfo()
+        foreach (User user in typedUsers)
+        {
+            Console.WriteLine($"── {user.GetType().Name} ─────────────────────");
+            user.DisplayInfo();   // virtual dispatch → correct subclass method
+            Console.WriteLine();
+        }
+    }
 
 
 
