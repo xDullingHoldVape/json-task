@@ -1,0 +1,34 @@
+[
+  {
+    "UserType": "Admin",
+    "Name": "Alice Admin",
+    "Age": 35,
+    "City": "San Francisco",
+    "AdminLevel": 1,
+    "Department": "IT"
+  },
+  {
+    "UserType": "Admin",
+    "Name": "Charlie Chief",
+    "Age": 45,
+    "City": "Seattle",
+    "AdminLevel": 2,
+    "Department": "Operations"
+  },
+  {
+    "UserType": "RegularUser",
+    "Name": "Dave Developer",
+    "Age": 28,
+    "City": "Austin",
+    "Subscription": "Premium",
+    "IsVerified": true
+  },
+  {
+    "UserType": "RegularUser",
+    "Name": "Eva Engineer",
+    "Age": 31,
+    "City": "Boston",
+    "Subscription": "Basic",
+    "IsVerified": false
+  }
+]
