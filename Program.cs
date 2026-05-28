@@ -20,6 +20,7 @@ class Program
 
         ReadSingleUser();
         NewEntries();
+        DeserialiseAllUsers();
 
     }
 
@@ -78,6 +79,29 @@ class Program
         Console.WriteLine("Snippet of updated file:");
         Console.WriteLine(updatedJson);
     }
+
+    // Deserialise ALL entries with a loop - console output
+
+    static void DeserialiseAllUsers()
+    {
+        PrintSectionHeader("Deserialise ALL users and output to console");
+
+        string path = DataPath("users.json");
+        string json = File.ReadAllText(path);
+
+        // Deserialise the whole array into a typed List<User>
+        List<User> users = JsonConvert.DeserializeObject<List<User>>(json)!;
+
+        Console.WriteLine($"Total users loaded: {users.Count}\n");
+
+        // Loop through every user and print their info
+        for (int i = 0; i < users.Count; i++)
+        {
+            Console.WriteLine($"── User #{i + 1} ──────────────────────");
+            users[i].DisplayInfo();
+        }
+    }
+
 
 
 
