@@ -19,6 +19,7 @@ class Program
     {
 
         ReadSingleUser();
+        NewEntries();
 
     }
 
@@ -40,7 +41,44 @@ class Program
         firstUser.DisplayInfo();
     }
 
-    
+    // Adding new entries to the JSON list at runtime
+    static void NewEntries()
+    {
+        PrintSectionHeader("Adding new entries to the JSON object");
+
+        string path = DataPath("users.json");
+        string json = File.ReadAllText(path);
+
+        // Load the JSON array into a mutable JArray (dynamic JSON model)
+        JArray usersArray = JArray.Parse(json);
+
+        // Build two new entries as JObjects and append them
+        var newUser1 = new JObject
+        {
+            ["Name"] = "Mambet Grozniy",
+            ["Age"] = 22,
+            ["City"] = "Miami"
+        };
+
+        var newUser2 = new JObject
+        {
+            ["Name"] = "Ishak Seryozni",
+            ["Age"] = 33,
+            ["City"] = "Berlin"
+        };
+
+        usersArray.Add(newUser1);
+        usersArray.Add(newUser2);
+
+        // Persist the updated array back to file (pretty-printed)
+        string updatedJson = usersArray.ToString(Formatting.Indented);
+        File.WriteAllText(path, updatedJson);
+
+        Console.WriteLine($"Added 2 new users. users.json now contains {usersArray.Count} entries.");
+        Console.WriteLine("Snippet of updated file:");
+        Console.WriteLine(updatedJson);
+    }
+
 
 
     // To make headers more attractive(design)
