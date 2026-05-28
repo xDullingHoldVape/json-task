@@ -34,7 +34,7 @@ public class Admin : User
     public override void DisplayInfo()
     {
         base.DisplayInfo();                          // reuse parent output
-        Console.WriteLine($"  Role       : Administrator (Level {AdminLevel})");
+        Console.WriteLine($"  Role: Administrator (Level {AdminLevel})");
         Console.WriteLine($"  Department : {Department}");
     }
 }
@@ -48,7 +48,7 @@ public class RegularUser : User
     public override void DisplayInfo()
     {
         base.DisplayInfo();
-        Console.WriteLine($"  Role         : Regular User");
+        Console.WriteLine($"  Role: Regular User");
 
     }
 }
